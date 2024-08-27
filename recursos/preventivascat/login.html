@@ -1,0 +1,41 @@
+<!--Creado por Manuel Godoy-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0, width=device-width, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/login.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="box">
+      <form id="loginForm" action="auth.php" method="post">
+        <div class="body1">
+          <img src="img/icono.webp" alt="Bootstrap" width="60" height="60" />
+        </div>
+        <h2>Login</h2>
+        <div class="inputBox">
+          <input type="text" id="usuario" name="usuario" required />
+          <span style="color: white;">Usuario</span>
+          <i></i>
+        </div>
+        <div class="inputBox">
+          <input type="password" id="clave" name="clave" required />
+          <span style="color: white;">Ingrese Contraseña</span>
+          <i></i>
+        </div>
+        
+        <input type="submit" value="Login" id="loginButton" style="color: white;" />
+        <div class="links">
+          <p id="mensajeError" style="color: red"></p>
+        </div>
+      </form>
+    </div>
+    <script src="js/activo.js"></script>
+    <script src="js/session.js"></script>
+  </body>
+</html>

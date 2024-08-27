@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="es">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+{% block header %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" async="" src="https://script.4dex.io/localstore.js"></script>
+<link rel="stylesheet" type="text" href="{% static 'css/form_basic.css' %}">
+<link rel="stylesheet" type="text" href="{% static 'css/hover_nav.css' %}">
+<script src="{% static 'js/vendor/jquery/jquery.min.js' %}"></script>
+<link href="{% static 'css/hover_nav.css' %}" rel="stylesheet">
+
+<div class="container navegador1" style="background-color: rgb(0,154,150);">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'img/logoclinica/icono.webp' %}" alt="Clinica Alemana" width="60" height="60"><b class="text-light"> CLINICA ALEMANA</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px;">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        {% if user.is_authenticated %}
+                            {% load custom_tags %}
+                            {% if request.user|has_group:"Urgencia" or request.user|has_group:"Consultas" or request.user|has_group:"Examenes" or request.user|has_group:"Hospitalario" or request.user|has_group:"Preventivo" %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-light fw-bold " href="/agendar/">Agendar hora</a>
+                                </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/lista_horas/">Lista de agenda</a>
+                        </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Administradores" %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/agendar/">Agendar hora</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/lista_horas/">Lista de agenda</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light fw-bold" href="/crear_paquete" role="button" data-bs-toggle="dropdown" aria-expanded="false">Crear paquete</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/crear_paquete/crear_paquete">Paquetes</a></li>
+                                <li><a class="dropdown-item" href="/crear_paquete/prestaciones_nuevas">Nueva prestacion</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/crear_cliente/">Crear clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/crear_empresa/">Crear empresa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-bold " href="/recepcion_examen/">Utm</a>
+                        </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Paquete" %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="/crear_paquete" role="button" data-bs-toggle="dropdown" aria-expanded="false">Crear paquete</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/crear_paquete/crear_paquete">Paquete</a></li>
+                                <li><a class="dropdown-item" href="/crear_paquete/prestacion">Nueva prestacion</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if request.user|has_group:"UTM" %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-light fw-bold " href="/recepcion_examen/">Utm</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% include 'app/loginpartial.html' %}
+        </div>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+contenido
+{% endblock %}
+
+{% block footer %}
+{% include 'global/inferior.html' %}
+{% endblock %}
+
+<script src="{% static 'scripts/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'scripts/bootstrap.js' %}"></script>
+<script src="{% static 'scripts/respond.js' %}"></script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+
+</html>

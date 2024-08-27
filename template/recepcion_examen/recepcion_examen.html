@@ -1,0 +1,131 @@
+{% extends 'global/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<div class="container justify-content-center mt-3 ">
+     <form id="filtroForm" method="post"   action="{% url 'Enviar' %}">
+         {% csrf_token %}
+        <div class="row">
+            <div class="col-md-15">
+                <div class="card">
+                    <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
+                        <h4 class="card-title text-center mt-0" style="color:white;"> UTMS </h4>
+                    </div>
+                    <div id="messages-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show mb-3" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                        <div class="form-group row">
+                            <div class="row align-items-start">
+                                <div class="col-sm-4">
+                                    <label for="busqueda" class="mr-2 fw-bold" style="color:white;">filtro:</label>
+                                    <select class="form-control border border-2" id="busqueda" name="busqueda" onchange="mostrarEntradas()">
+                                        {% load custom_tags %}
+                                        <option value="codigo1">Codigo</option>
+                                        <option value="codigo2">Rut</option>
+                                        <option value="codigo3">Nombre Utm</option>
+                                        <option value="codigo4">N° Examen</option>
+                                        <option value="codigo5">Fecha</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4" style="display: none;" id="busquedaRutDiv">
+                                    <label for="busquedaCodigo" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <input type="text" class="form-control" id="busquedaCodigo" name="busquedaCodigo" placeholder="Ejemplo: 1111" pattern="[0-9]*" >
+                                    <div id="mensaje1" style="color: red;"></div>
+                                </div>
+                                <div class="col-sm-4" style="display: none;">
+                                    <label for="busquedaRut" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <input type="text" class="form-control" id="busquedaRut" name="busquedaRut" placeholder="11111111-1">
+                                    <div id="mensaje2" style="color: red"></div>
+                                </div>
+                                <div class="col-sm-4" style="display: none;">
+                                    <label for="busquedaNomUtm" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <input type="text" class="form-control" id="busquedaNomUtm" name="busquedaNomUtm" placeholder="Nombre utm">
+                                    <div id="mensaje3" style="color: red"></div>
+                                </div>
+                                <div class="col-sm-4" style="display: none;">
+                                    <label for="busquedaNexamen" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <input type="text" class="form-control" id="busquedaNexamen" name="busquedaNexamen" placeholder="Número examen" pattern="[0-9]*">
+                                    <div id="mensaje4" style="color: red"></div>
+                                </div>
+                                <div class="col-sm-3" style="display: none;" id="busquedafecha1">
+                                    <label for="fechaInicio" class="fw-bold"  style="color:white;">Inicio: </label>
+                                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                                </div>
+                                <div class="col-sm-3" style="display: none;" id="busquedafecha2">
+                                    <label for="fechaFin" class="fw-bold"  style="color:white;">Fin: </label>
+                                    <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                                </div>
+                                 <div class="col-sm-2 mt-4" style="display: none;" id="botonbusqueda">
+                                    <button class="btn btn-primary" type="button" id="filtro" >Filtrar</button>
+                                </div>
+                                <div id="mensaje5" style="color: red"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                        <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                            <div class="form-group row ">
+                                <div class="row align-items-start" style="background-color:white;margin-left:1px;">
+                                    <div style="max-height: 300px; overflow-y: auto;">
+                                        <table class="table table-striped table-bordered" style="margin-top:0.5%;">
+                                            <thead class="text-center">
+                                            <tr>
+                                                <th class="text-left">Codigo</th>
+                                                <th class="text-left">Rut</th>
+                                                <th class="text-right">Nombre</th>
+                                                <th class="text-right">Telefono</th>
+                                                <th class="text-right">Examen</th>
+                                                <th class="text-right">Fecha Ingreso</th>
+                                                <th class="text-right">Solicitante</th>
+                                                <th class="text-right">Confirmacion</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center" id="table-body">
+                                            <input id="checkbox" name="checkbox"  style="display: none;">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group row flex-column align-items-start">
+                                    <div class="row justify-content-between">
+                                        <div class="col-sm-2">
+                                            <div id="pagination" class="d-flex justify-content-start mt-2 pagination-container" style="display: none;"></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-primary btn-sm btn-block btn-lg-lg" type="submit" style="width:100%;" id="Enviar" name="Enviar">Confirmar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                </div>
+            </div>
+
+        </div>
+     </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/recepcion_examen/recepcion_examen.js' %}"></script>
+
+
+{% endblock %}

@@ -1,0 +1,182 @@
+/* css sacado de Coding Programming y editado por Manuel Godoy */
+@media (max-width: 915px) {
+    .efecto.efecto-915::after,
+    .efecto.efecto-915::before{
+        top: 10%;
+        left: -15%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 740px){
+    .efecto.efecto-740::after,
+    .efecto.efecto-740::before{
+        top: 10%;
+        left: -22%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 412px){
+    .efecto.efecto-412::after,
+    .efecto.efecto-412::before{
+        top: 10%;
+        left: -90%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 360px){
+    .efecto.efecto-360::after,
+    .efecto.efecto-360::before{
+        top: 10%;
+        left: -120%;
+        width: 550px;
+        height: 170px;
+    }
+}
+
+body {
+    min-height: 100vh;
+    background: #070137;
+}
+
+button {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background: #2850b1;
+    padding: 5px 15px;
+    border-radius: 90px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:active {
+    background: #2222ff;
+    opacity: 0.8;
+}
+
+.body1 {
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+span,h4{
+    color: #019B96;
+    font-weight: bold;
+}
+
+input{
+    color: #23242a; 
+    background: #45f3ff;
+    font-weight: bold;
+    width: 100%;
+}
+
+
+.efecto{
+    position: relative;
+    background: #1c1c1c;
+    overflow: hidden;
+}
+
+.container2 {
+    border: 1px solid #085452;
+    margin: 2px 2px 2px 2px;
+    padding: 10px;
+    background: #08005c;
+    position: relative;
+    z-index: 10;
+}
+
+.efecto::before{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 1000px;
+    height: 130px;
+    background: linear-gradient(60deg,transparent,#019B96,#019B96);
+    transform-origin: center right;
+    animation: animate 6s linear infinite;
+}
+
+.efecto::after{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 1000px;
+    height: 130px;
+    background: linear-gradient(60deg,transparent,#2850b1,#2850b1);
+    transform-origin: center right;
+    animation: animate 6s linear infinite;
+    animation-delay: -3s;
+}
+
+@keyframes animate {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+/* Esto es para los campos labels desde js*/
+.etiqueta-evento {
+    width: 200px; /* ancho del label */
+    margin: 0 auto; /* Centra horizontalmente */
+    color: gray;
+    display: inline-block;
+}
+
+.primera-etiqueta {
+    width: 200px; 
+    margin: 0 auto; 
+    color: white; 
+    display: inline-block;
+}
+
+.circulo {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 50%;
+    float: left;
+    margin-right:15px;
+}
+
+.circulo-verde {
+    background-color: green;
+    float: left;
+    margin-right:15px;
+}
+
+.PacienteDetalle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.global_paciente{
+    font-size: 23px;
+}
+
+.rut{
+    color: white;
+    margin-right: 20px;
+}
+.nombre{
+    color: white;
+}
+
+.titulo_paciente{
+    color: gray;
+}

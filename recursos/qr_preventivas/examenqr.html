@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado solicitud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .logo {
+            max-width: 100px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header class="container text-center">
+        <img src="Home.png" alt="Logo de tu empresa" class="logo">
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                            <?php if ($valido): ?>
+                                <h3 class="card-title mb-4 text-center">Examen N° <?php echo $num ?> </h3>
+                                <?php if (!empty($examen)): ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>Nombre</th>
+                                                    <th>Rut</th>
+                                                    <th>Fecha</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($examen as $ex): ?>
+                                                    <tr>
+                                                        <td><?php echo $ex['cod_examen']; ?></td>
+                                                        <td><?php echo $ex['nombre_paciente']; ?></td>
+                                                        <td><?php echo $ex['rut']; ?></td>
+                                                        <td><?php echo date('d-m-Y', strtotime($ex['fecha_ingreso'])); ?></td>
+                                                        <td>
+                                                            <?php if ($ex['recepcionado'] == 't'): ?>
+                                                                <span style="color: green;">Recepcionado en Clinica Alemana</span>
+                                                            <?php else: ?>
+                                                                No se encuentra recepcionado aún
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php else: ?>
+                                    <p class="text-center">No se encontraron solicitudes para mostrar.</p>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <h3 class="card-title mb-4 text-center">Estado de la solicitud</h3>
+                                <p class="card-text text-center" style="color: rgb(158, 10, 10);font-size: 23px;">No es válido</p>
+                            <?php endif ?>
+                            <hr>
+                            <p class="mb-0 text-center">Desde: <strong>Clinica Alemana</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

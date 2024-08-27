@@ -1,0 +1,215 @@
+{% extends 'global/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container justify-content-center mt-3 ">
+        <div class="row">
+            <div class="col-md-15">
+                <div class="card">
+                    <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
+                        <h4 class="card-title text-center mt-0" style="color:white;"> Creación de paquetes </h4>
+                    </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;" class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                    <div id="alert-container" class="alert-container" style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;"></div>
+                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                        <div class="form-group row ">
+                            <div class="row align-items-start">
+                                <div class="col-sm-3">
+                                    <label  class="form-label fw-bold" style="color:white;">Nombre de paquete</label>
+                                    <input class="form-control" type="text" name="nombre_paquete" id="nombre_paquete"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="tipo_prestacion" class=" form-label mr-2 fw-bold" style="color:white;">Tipo:</label>
+                                    <select class="form-control border border-2 " id="tipo_prestacion" name="tipo_prestacion" onchange="showPrestaciones(this.value)">
+                                        <option selected value="" disabled>Seleccione tipo</option>
+                                        {% for tipo in tipo_prestacion %}
+                                        <option value="{{ tipo.cod_tipo_prestacion }}">{{ tipo.tipo_prestacion }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 mt-1">
+                                    <label  class="form-label fw-bold" style="color:white;">Prestaciones:</label>
+                                    <div class="card">
+                                        <table class="table table-striped" style="margin-top:0.5%;" id="tabla_prestaciones">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cod_prestacion</th>
+                                                    <th>Examenes</th>
+                                                    <th>Seleccionar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-15 mt-4">
+                                    <button class="btn btn-primary" style="float:right;" type="submit" id="agregar_tabla_btn">Agregar a tabla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                        <div class="form-group row ">
+                            <div class="row align-items-start" style="background-color:white;margin-left:1px;">
+                                <div style="max-height: 300px; overflow-y: auto;">
+                                    <table class="table table-striped" style="margin-top:0.5%;"  id="tabla_seleccionados">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo prestacion</th>
+                                                <th>Cod_examen</th>
+                                                <th>Examen</th>
+                                                <th>Sacar fila</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="tr_seleccionados">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mb-3" style="padding-left: 80%;">
+                                    <button class="btn btn-primary" type="button" id="botonModal" data-bs-toggle="modal" data-bs-target="#modalpaquetes">Crear paquete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-----Modal crear paquete---->
+    <div class="modal modal-lg fade" id="modalpaquetes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: rgb(78, 170, 167);">
+              <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Creación del paquete</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="miFormulario" method="post" action="{% url 'crear_paquete' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group row ">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label  class="form-label fw-bold">Nombre de paquete</label>
+                                    <input class="form-control" type="text" name="nombre_paquete_modal" id="nombre_paquete_modal" readonly/>
+                                </div>
+                                <div class="col-sm-15 mt-3">
+                                     <div style="max-height: 600px; overflow-y: auto;">
+                                        <table class="table table-striped" style="margin-top:0.5%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo prestacion</th>
+                                                    <th>Cod_examen</th>
+                                                    <th>Examen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: rgb(78, 170, 167);">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="enviarDatos">Crear</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+<!-----Modal Editar ---->
+    <div class="modal modal-lg fade" id="modaleditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgb(78, 170, 167);">
+                <h5 class="modal-title" id="Titleditarr" style="color:white;">Editar Prestacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="Form2" method="post" action="{% url 'editar' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div id="mensaje-error" class="alert alert-danger" style="display: none;"></div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="nombre" class="form-label fw-bold">Nombre prestación:</label>
+                                <input class="form-control" type="text" name="nombre" id="nombre" required>
+                                <div id="messages"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="codigoInterno" class="form-label fw-bold">Código interno:</label>
+                                <input class="form-control" type="text" name="codigoInterno" id="codigoInterno" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="codigoFonasa" class="form-label fw-bold">Código fonasa:</label>
+                                <input class="form-control" type="text" name="codigoFonasa" id="codigoFonasa" required>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" name="id" id="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="enviarEditar">Guardar</button>
+                    <input type="hidden" id="datosAntes" name="datosAntes" />
+                    <input type="hidden" id="datosEditar" name="datosEditar">
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+
+<!-- Modal de Anulación -->
+<div class="modal fade" id="AnulacionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="Post" id="form3" class="form-horizontal" action="{% url 'anulado' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="motivoAnulacionModalLabel">Motivo de Anulación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="motivoAnulacion">Ingrese el motivo de la anulación:</label>
+                    <input type="text" name="motivo_anulacion" class="form-control" id="motivoAnulacion" pattern="[A-Za-z\s]+" required>
+                    <div id="error-mensaje" style="color: red;"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar Anulación</button>
+                    <input type="hidden" value="" id="anular" name="anular">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/crear_paquete/filtro_tipo_prestacion.js' %}"></script>
+{% endblock %}

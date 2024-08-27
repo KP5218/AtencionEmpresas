@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{titulo}</title>
+    <style>
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            position: relative; 
+        }
+        .logo {
+            width: 130px; 
+        }
+        .title {
+            text-align: center;
+            flex-grow: 1; 
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .barcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .qr-code {
+            width: 130px; 
+            position: absolute; 
+            top: 0; 
+            right: 0; 
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="logo">{logo}</span>
+        <h1 class="title">{titulo} </h1>
+    </div>
+    <span class="qr-code">{codigo_qr}</span>
+    
+    <table >
+        <tr>
+            <td style="width: 30%;font-weight: bold;">N° orden :</td>
+            <td style="width: 50%;">{num_examen}</td>
+            <td style="width: 30%;font-weight: bold;">UTM :</td>
+            <td style="width: 50%;">{utm}</td>
+            
+        </tr>
+        <tr>
+            <td style="width: 30%;font-weight: bold;">Responsable :</td>
+            <td style="width: 50%;">{responsable}</td>
+            <td style="width: 30%;font-weight: bold;">Fecha envio :</td>
+            <td style="width: 50%;">{fecha}</td>
+            
+        </tr>
+    </table>
+    
+    <table style="margin-top: 5%;">
+        <tr><th style="width:10%">N°</th>
+            <th style="width:15%">RUT</th>
+            <th>Nombre</th>
+            <th style="width:15%">Teléfono</th>
+            <th>QR</th>
+        </tr>
+        {tabla_data}
+    </table>
+
+</body>
+</html>

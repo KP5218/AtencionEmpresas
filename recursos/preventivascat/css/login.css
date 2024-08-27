@@ -1,0 +1,130 @@
+/* css sacado de Coding Programming y editado por Manuel Godoy */
+@media (max-width: 768px) {
+    .box {
+        width: 100%;
+    }
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.body1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: white;
+}
+.box{
+    position: relative;
+    width: 370px;
+    height: 450px;
+    background: #1c1c1c;
+    overflow: hidden;
+    border-radius: 50px 5px;
+}
+
+form{
+    position: absolute;
+    inset: 2px;
+    border-radius: 50px 5px;
+    background: #019B96;
+    z-index: 10;
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+}
+h2{
+    color: white;
+    font-size: 35px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.inputBox{
+    position: relative;
+    width: 300px;
+    margin-top: 35px;
+}
+.inputBox input{
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: black;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    z-index: 10;
+    text-align: center;
+}
+input[type="submit"]{
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background: #2850b1;
+    padding: 5px;
+    margin-top: 40px;
+    border-radius: 90px;
+    font-weight: 600;
+    cursor: pointer;
+}
+input[type="submit"]:active{
+    background: linear-gradient(90deg,#019B96,#2850b1,#019B96);
+    opacity: 0.8;
+}
+.inputBox span{
+    position: absolute;
+    left: 0;
+    padding: 20px 10px 10px;
+    font-size: 1em;
+    color: #8f8f8f;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+}
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span{
+    color: #019B96;
+    transform: translateX(-10px) translateY(-30px);
+    font-size: 0.75em;
+}
+.inputBox i{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: white;
+    border-radius: 4px;
+    transition: 0.5s;
+    pointer-events: none;
+    z-index: 9;
+}
+.inputBox input:valid ~ i,
+.inputBox input:focus ~ i{
+    height: 44px;
+}
+
+.links a{
+    margin: 25px 0;
+    font-size: 1em;
+    color: #8f8f8f;
+    text-decoration: none;
+}
+.links a:hover{
+    color:#45f3ff;
+}
+

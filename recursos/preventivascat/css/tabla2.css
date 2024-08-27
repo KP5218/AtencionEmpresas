@@ -1,0 +1,211 @@
+/* css sacado de Coding Programming y editado por Manuel Godoy */
+@media (max-width: 915px) {
+    .efecto.efecto-915::after,
+    .efecto.efecto-915::before{
+        top: 10%;
+        left: -15%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 740px){
+    .efecto.efecto-740::after,
+    .efecto.efecto-740::before{
+        top: 10%;
+        left: -22%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 412px){
+    .efecto.efecto-412::after,
+    .efecto.efecto-412::before{
+        top: 10%;
+        left: -90%;
+        width: 550px;
+        height: 170px;
+    }
+}
+@media (max-width: 360px){
+    .efecto.efecto-360::after,
+    .efecto.efecto-360::before{
+        top: 10%;
+        left: -120%;
+        width: 550px;
+        height: 170px;
+    }
+}
+
+body {
+    min-height: 100vh;
+    background: #070137;
+}
+
+button {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background: #2850b1;
+    padding: 5px 15px;
+    border-radius: 90px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:active {
+    background: #2222ff;
+    opacity: 0.8;
+}
+.body1 {
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.span-e-actual{
+    color: #019B96;
+    font-weight: bold;
+}
+
+.evento-actual{
+    color: #23242a; 
+    background: #45f3ff;
+    font-weight: bold;
+    width: 100%;
+}
+
+.body2 {
+    margin-top: 2%;
+}
+
+table {
+    color: white;
+    font-size: 14px;
+    width: 100%; 
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #019B96;
+}
+
+th {
+    padding: 10px 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px 10px;
+    border-bottom: 1px solid #085452;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+tbody tr:hover {
+    background: #019B96;
+}
+
+.efecto{
+    position: relative;
+    background: #1c1c1c;
+    overflow: hidden;
+}
+
+.container2 {
+    border: 1px solid #085452;
+    margin: 2px 2px 2px 2px;
+    padding: 10px;
+    background: #08005c;
+    position: relative;
+    z-index: 10;
+}
+
+.efecto::before{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 1000px;
+    height: 130px;
+    background: linear-gradient(60deg,transparent,#019B96,#019B96);
+    transform-origin: center right;
+    animation: animate 6s linear infinite;
+}
+
+.efecto::after{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 1000px;
+    height: 130px;
+    background: linear-gradient(60deg,transparent,#2850b1,#2850b1);
+    transform-origin: center right;
+    animation: animate 6s linear infinite;
+    animation-delay: -3s;
+}
+
+@keyframes animate {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.paginador{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 300px; 
+    margin: 0 auto; 
+}
+
+.margen-paginador{
+    margin-top: 3%; 
+}
+
+.num_page{
+    margin-left: 2%;
+    margin-right: 2%; 
+    color: #45f3ff;
+    font-weight: bold;
+    width: 100%;
+    flex-grow: 1; 
+    text-align: center;
+}
+h1{
+    color: #45f3ff;
+    text-align: center;
+    margin-top: 2%;
+}
+h2{
+    color: #ffff;
+    text-align: center;
+    margin-top: 2%;
+}
+input[type="submit"]{
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background: #2850b1;
+    padding: 5px;
+    margin-top: 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+input[type="submit"]:active{
+    background: linear-gradient(90deg,#019B96,#2850b1);
+    opacity: 0.8;
+}

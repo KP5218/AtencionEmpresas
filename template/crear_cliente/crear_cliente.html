@@ -1,0 +1,109 @@
+{% extends 'global/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container justify-content-center mt-3 ">
+    <div class="row">
+        <div class="col-md-15">
+            <div class="card">
+                <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
+                    <h4 class="card-title text-center mt-0" style="color:white;"> Creación de cliente </h4>
+                </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;" class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                <div id="alert-container" class="alert-container" style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;">
+
+                    </div>
+                <form id="formulario_cliente" method="post" action="{% url 'insertar_cliente' %}">
+                    {% csrf_token %}
+                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                        <div class="form-group row ">
+                            <div class="row align-items-start">
+                                <div class="col-sm-3">
+                                    <label for="empresa_cliente" class="mr-2 fw-bold " style="color:white;">Seleccione tipo:</label>
+                                    <select class="form-control border border-2 " id="tipo" name="tipo" required>
+                                        <option selected value="" disabled>Seleccione</option>
+                                        {% for tipo in tipos %}
+                                        <option value="{{ tipo.cod_tipo }}">{{ tipo.nombre_tipo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3" id="div_empresa" style="display:none">
+                                    <label for="empresa_cliente" class="mr-2 fw-bold " style="color:white;">Seleccione empresa:</label>
+                                    <select class="form-control border border-2 " id="empresa_cliente" name="empresa_cliente" required>
+                                        <option selected value="" disabled>Seleccione</option>
+                                        {% for empresa in empresas %}
+                                        <option value="{{ empresa.cod_empresa }}">{{ empresa.nombre_empresa }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3" id="div_mutual" style="display:none">
+                                    <label for="empresa_cliente" class="mr-2 fw-bold " style="color:white;">Seleccione mutual:</label>
+                                    <select class="form-control border border-2 " id="mutual_cliente" name="mutual_cliente" required>
+                                        <option selected value="" disabled>Seleccione mutual</option>
+                                        {% for mutual in mutualidades %}
+                                        <option value="{{ mutual.cod_mutual }}">{{ mutual.nombre_mutual }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3" id="div_utms" style="display:none">
+                                    <label for="utms_cliente" class="mr-2 fw-bold " style="color:white;">Seleccione UTMS:</label>
+                                    <select class="form-control border border-2 " id="utms_cliente" name="utms_cliente" required>
+                                        <option selected value="" disabled>Seleccione</option>
+                                        {% for utm in utms %}
+                                        <option value="{{ utm.cod_utms }}">{{ utm.nombre_utms }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="nombre_cliente" class="mr-2 fw-bold" style="color:white;">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="rut" class="mr-2 fw-bold" style="color:white;">Rut </label>
+                                    <input type="text" class="form-control" id="rut" name="rut" maxlength="10"  onkeypress="return isNumber(event)" oninput="checkRut(this)" required>
+                                    <div>
+                                        <span id="alerta">
+                                            <span id="mensaje" style="color: red"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="usuario_cliente" class="mr-2 fw-bold" style="color:white;">Usuario</label>
+                                    <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="contraseña_cliente" class="mr-2 fw-bold" style="color:white;">Contraseña</label>
+                                    <input type="text" class="form-control" id="contraseña_cliente" name="contraseña_cliente" placeholder="***********" required>
+                                    <span id="error_contraseña" style="color: red; display: none;">La contraseña debe contener minimo 8 caracteres, incluyendo al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.</span>
+                                </div>
+
+                                <div class="col-sm-3 ">
+                                    <label for="confirmar_contraseña" class="mr-2 fw-bold" style="color:white;">Confirmar Contraseña</label>
+                                    <input type="text" class="form-control" id="confirmar_contraseña" name="confirmar_contraseña" placeholder="***********" required>
+                                    <span id="error_confirmar_contraseña" style="color: red; display: none;">Las contraseñas no coinciden.</span>
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-15" style="padding-left:85%; " >
+                                <button class="btn btn-primary" id="crear" type="submit" >Crear cliente</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/crear_cliente/confirmar_contraseña.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/crear_cliente/selecciona_tipo.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/crear_empresa/validador_rut.js' %}"></script>
+{% endblock %}

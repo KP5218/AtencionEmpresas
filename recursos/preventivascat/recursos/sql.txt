@@ -1,0 +1,48 @@
+-- DROP TABLE IF EXISTS public.usuario;
+
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    id SERIAL PRIMARY KEY,
+    usuario character varying(50) COLLATE pg_catalog."default" UNIQUE, 
+    clave character varying COLLATE pg_catalog."default",
+    nombre character varying(100) COLLATE pg_catalog."default",
+    empresa character varying(100) COLLATE pg_catalog."default"
+);
+
+ALTER TABLE IF EXISTS public.usuario
+    OWNER to postgres;
+
+
+
+
+
+
+
+-- Table: public.solicitudes
+
+-- DROP TABLE IF EXISTS public.solicitudes;
+
+CREATE TABLE IF NOT EXISTS public.solicitudes
+(
+    id_solicitud bigint NOT NULL DEFAULT 'nextval('solicitudes_id_solicitud_seq'::regclass)',
+    usuario character varying COLLATE pg_catalog."default",
+    rut character varying COLLATE pg_catalog."default",
+    fecha_ingreso date,
+    nombre_solicitante character varying COLLATE pg_catalog."default",
+    preventiva character varying COLLATE pg_catalog."default",
+    aprobar boolean,
+    fecha_atencion date,
+    hora_atencion time with time zone,
+    responsable character varying COLLATE pg_catalog."default",
+    telefono integer,
+    CONSTRAINT solicitudes_pkey PRIMARY KEY (id_solicitud),
+    CONSTRAINT fk_usuario FOREIGN KEY (usuario)
+        REFERENCES public.usuario (usuario) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.solicitudes
+    OWNER to postgres;

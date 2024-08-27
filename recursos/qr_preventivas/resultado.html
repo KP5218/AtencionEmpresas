@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado solicitud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .logo {
+            max-width: 100px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header class="container text-center">
+        <img src="Home.png" alt="Logo de tu empresa" class="logo">
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <?php if ($valido): ?>
+                            <h3 class="card-title mb-4 text-center">Solicitud N° <?php echo $num ?> </h3>
+                            
+                            <?php if (!empty($solicitudes)): ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Rut</th>
+                                                <th>Estado</th>
+                                                <th>Fecha Atención</th>
+                                                <th>Hora Atención</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($solicitudes as $solicitud): ?>
+                                                <tr>
+                                                    <td><?php echo $solicitud['nombre_solicitante']; ?></td>
+                                                    <td><?php echo $solicitud['rut']; ?></td>
+                                                    <td>
+                                                        <?php if ($solicitud['agendado']): ?>
+                                                            Agendado
+                                                        <?php elseif ($solicitud['ingresado']): ?>
+                                                            Ingresado
+                                                        <?php else: ?>
+                                                            No se encuentra agendado ni ingresado
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <?php if ($solicitud['agendado']): ?>
+                                                    <td><?php echo date('d-m-Y', strtotime($solicitud['fecha_ingreso'])); ?></td>
+
+                                                        <td><?php echo $solicitud['hora_atencion']; ?></td>
+                                                    <?php else: ?>
+                                                        <td>Aún no agendado</td>
+                                                        <td>Aún no agendado</td>
+                                                    <?php endif; ?>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <p>No se encontraron solicitudes para mostrar.</p>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <h3 class="card-title mb-4">Estado de la solicitud</h3>
+                            <p class="card-text" style="color: rgb(158, 10, 10);font-size: 23px;">No es válido</p>
+                        <?php endif ?>
+                        <hr>
+                        <p class="mb-0 text-center">Desde: <strong>Clinica Alemana</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
