@@ -1,4 +1,3 @@
-//Creado por Barbara Vera
 //aqui verifico si el usuario esta logeado y si lo está el boton del home debe estar configurado para redireccionarlo
 document.addEventListener("DOMContentLoaded", function () {
     var nombreUsuarioSpan = document.getElementById("nombreUsuario");

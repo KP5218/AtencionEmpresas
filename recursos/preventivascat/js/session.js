@@ -1,4 +1,3 @@
-//Creado por Barbara Vera
 
 //esto sirve para saber si las credenciales del usuario son correctas
 //si lo son se inicia sesion y redirige al home

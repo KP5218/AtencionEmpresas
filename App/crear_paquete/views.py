@@ -83,13 +83,13 @@ def guardar_paquete(request):
     else:
         return JsonResponse({'error': 'La solicitud debe ser de tipo POST.'}, status=400)
 @csrf_exempt
-def paquete_existe(request,nombre_paquete_modal):
+def paquete_existe(request, nombre_paquete_modal):
     try:
         paquete_existente = paquete.objects.filter(nombre_paquete__icontains=nombre_paquete_modal)
         data = list(paquete_existente.values())
         return JsonResponse(data, safe=False)
     except Exception as e:
-        messages.error(request, f'Ocurrio un error, no se pudo validar si el paquete existe: {str(e)}')
+        messages.error(request, f'Ocurrió un error, no se pudo validar si el paquete existe: {str(e)}')
         return JsonResponse({'success': False, 'error_message': str(e)})
 @csrf_exempt
 def nuevaPrestacion(request):
@@ -102,11 +102,16 @@ def nuevaPrestacion(request):
             cod_fonasa = datos.get('cod_fonasa', '').upper()
 
             with transaction.atomic():
-                ultima_prestacion = prestacion.objects.order_by('-id').first()
-                nuevo_id = ultima_prestacion.id + 1 if ultima_prestacion else 1
+                ultima_prestacion = prestacion.objects.order_by('-cod_prestacion').first()
+
+                if ultima_prestacion:
+                    ultimo_numero = int(ultima_prestacion.cod_prestacion.replace('', ''))
+                    nuevo_cod_prestacion = ultimo_numero + 1
+                else:
+                    nuevo_cod_prestacion = 1
 
                 nueva_prestacion = prestacion(
-                    cod_prestacion=nuevo_id,
+                    cod_prestacion=nuevo_cod_prestacion,
                     prestacion=nombre_prestacion,
                     cod_tipo_prestacion_id=tipo_prestacion_id,
                     codigo_interno=cod_interno,
@@ -119,6 +124,7 @@ def nuevaPrestacion(request):
             messages.error(request, str(e))
 
     return HttpResponseRedirect(reverse("prestaciones_nuevas"))
+
 @csrf_exempt
 def editar(request):
     if request.method == 'POST':

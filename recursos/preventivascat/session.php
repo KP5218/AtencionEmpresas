@@ -1,5 +1,4 @@
 <?php
-//Creado por Barbara Vera
 
 session_start();
 

@@ -1,20 +1,23 @@
 {% extends 'global/layout.html' %}
-
 {% load static %}
 
 {% block content %}
-
-<div class="container justify-content-center mt-1">
+<div class="container-fluid p-0 m-0 justify-content-center">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card text-bg-dark">
-        <img src="{% static 'img/logoClinica/clinica_3.png' %}" style="opacity: 0.8;" class="card-img">
-        <div class="card-img-overlay d-flex justify-content-end align-items-end">
-          <div class="container">
+    <div class="col-md-12 p-0">
+      <div class="card border-0 text-bg-dark">
+        <img src="{% static 'img/logo/fondo5.png' %}" class="card-img" style="object-fit: cover; width: 100%; height: auto; max-height: 100vh;">
+        <div class="card-img-overlay d-flex justify-content-start align-items-start" style="padding-top: 150px;">
+          <div class="container text-start pt-0 pb-0">
             {% if user.is_authenticated %}
-            <h1 class="text-white" style="float:right;"><b>Bienvenid@ {{ user.username }}</b></h1>
+              <script>
+                window.location.href = "{% url 'inicio_agendar_hora' %}";
+              </script>
             {% else %}
-            <h1 class="text-white" style="float:right;"><b>Bienvenid@</b></h1>
+              <h1 class="text-white" style="font-size: 7rem; font-weight: bold; margin-top: 0; margin-bottom: 0; margin-left: 50px;">Bienvenido</h1>
+              <p class="text-white mt-4" style="text-align: justify; font-size: 1.7rem; line-height: 1.6; max-width: 80%; margin-left: -160px; margin-right: auto; padding-top: 20px;">
+                Este software de gestión integral te permite crear empresas desde cero, registrar clientes, agendar horas, diseñar paquetes personalizados y agregar nuevas prestaciones con facilidad. Todo esto con un enfoque profesional que incluye automatización, recordatorios, estadísticas en tiempo real y una interfaz intuitiva para optimizar tus procesos y mejorar la experiencia de tus clientes.
+              </p>
             {% endif %}
           </div>
         </div>
@@ -22,7 +25,4 @@
     </div>
   </div>
 </div>
-
-
-
 {% endblock %}

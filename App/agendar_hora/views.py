@@ -30,6 +30,7 @@ def agenda_hora(request):
 def filtroRut(request):
     if request.method == 'POST':
         rut_busqueda = request.POST.get('busquedaRut')
+        print(rut_busqueda)
 
         datos_filtrados_rut = solicitudes.objects.filter(rut=rut_busqueda)
 

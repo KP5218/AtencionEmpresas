@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'sistema_preventivas.wsgi.application'
 DATABASES = { 'default':
                   { 'ENGINE': 'django.db.backends.postgresql_psycopg2',
                     'NAME': 'bdproyecto',
-                    'USER': 'postgres',
-                    'PASSWORD': '050218',
+                    'USER': 'user',
+                    'PASSWORD': '123456',
                     'HOST': 'localhost',
                     'PORT': '5432' }
               }

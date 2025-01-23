@@ -1,5 +1,4 @@
 <?php
-//Creado por Barbara Vera
 
 // realizo la conexion
 include_once "conexion.php";

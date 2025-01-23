@@ -1,6 +1,4 @@
 <?php
-//Creado por Barbara Vera
-
 //aqui declaro los datos de mi bd
 $host = "localhost";
 $port = 5432;

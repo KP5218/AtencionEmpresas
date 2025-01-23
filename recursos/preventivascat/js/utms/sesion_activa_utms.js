@@ -1,4 +1,3 @@
-//Creado por Barbara Vera
 document.addEventListener("DOMContentLoaded", function () {
     // Verificar si la sesión del usuario existe
     fetch("session.php")

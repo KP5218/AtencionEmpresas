@@ -1,4 +1,3 @@
-//Creado por Barbara Vera
 document.addEventListener("DOMContentLoaded", function () {
     // Agrega un evento de clic al botón "Cerrar Sesión"
     document.getElementById("cerrarSesion").addEventListener("click", function () {

@@ -1,6 +1,4 @@
 <?php
-//Creado por Barbara Vera
-
 //busco que el archivo de config exista
 $configPath = __DIR__ . "/config.php";
 if (file_exists($configPath)) {

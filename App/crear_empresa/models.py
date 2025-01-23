@@ -33,6 +33,6 @@ class tipo_organizacion(models.Model):
     class Meta:
         db_table = 'tipo_organizacion'
     cod_tipo = models.CharField(max_length=50, unique=True, null=True, blank=True,verbose_name="Codigo tipo")
-    nombre_tipo = models.TextField(max_length=100, null=True, blank=True, verbose_name="Nombre tipo")
+    nombre_tipo = models.TextField(max_length=250, null=True, blank=True, verbose_name="Nombre tipo")
 
 
