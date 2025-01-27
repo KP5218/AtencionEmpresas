@@ -1,5 +1,5 @@
 //aqui obtengo desde bd los tipos de formulario para llenar el select
-fetch('http://localhost/preventivascat/select_form.php')
+fetch('http://localhost/recursos/preventivascat/select_form.php')
   .then(response => response.json())
   .then(data => {
     llenarSelect('tipo_formulario', data); 

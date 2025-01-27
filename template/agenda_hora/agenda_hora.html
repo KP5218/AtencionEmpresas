@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card border-0">
                     <div class="col-12">
-                        <h4 class="card-title text-center mt-3" >Agendar Hora Medica</h4>
+                        <h4 class="card-title text-center mt-3 text-muted" style="font-family: 'Arial', sans-serif; font-size: 28px; color: #4E4E4E; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1) color: #4E4E4E;">Agendar Hora Medica</h4>
                     </div>
                     <div id="messages-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
                         {% for message in messages %}
@@ -30,7 +30,7 @@
                         {% endfor %}
                     </div>
 
-                    <div class="card-body card-hover border-0" style="padding: 20px; justify-content: center; align-items: center; margin-left:8%;">
+                    <div class="card-body card-hover border-0" style="padding: 20px; justify-content: center; align-items: center; margin-left:10%;">
                         <div class="form-group row">
                             <div class="row align-items-start">
                                 <div class="col-md-4">
@@ -95,16 +95,16 @@
                                     <input type="text" class="form-control" id="busquedaUtms" name="busquedaUtms" placeholder="Utms">
                                 </div>
                                 <div class="col-md-2 mt-4" style="display: none;" id="botonurgencia">
-                                    <button class="btn btn-primary" type="button" id="filtrourgencia">Filtrar</button>
+                                    <button class="btn btn-dark" type="button" id="filtrourgencia">Filtrar</button>
                                 </div>
                                 <div class="col-md-2 mt-4" style="display: none;" id="botonhospitalario">
-                                    <button class="btn btn-primary" type="button" id="filtrohospitalario">Filtrar</button>
+                                    <button class="btn btn-dark" type="button" id="filtrohospitalario">Filtrar</button>
                                 </div>
                                 <div class="col-md-2 mt-4" style="display: none;" id="botonConsulta">
-                                    <button class="btn btn-primary" type="button" id="filtroConsulta">Filtrar</button>
+                                    <button class="btn btn-dark" type="button" id="filtroConsulta">Filtrar</button>
                                 </div>
                                 <div class="col-md-2 mt-4" style="display: none;" id="botonbusqueda">
-                                    <button class="btn btn-primary" type="button" id="filtro">Filtrar</button>
+                                    <button class="btn btn-dark" type="button" id="filtro">Filtrar</button>
                                 </div>
                                 <div id="mensaje4" style="color: red"></div>
                                 <div id="mensaje5" style="color: red"></div>
@@ -151,7 +151,7 @@
         <div class="modal-content">
             <form id="modal" method="POST" action="{% url 'agendar' %}">
                 {% csrf_token %}
-                <div class="modal-header" style="background-color: rgb(78, 170, 167);">
+                <div class="modal-header" style="background-color: #003366;">
                     <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Agendar hora</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" style="background-color: rgb(78, 170, 167);">
+                <div class="modal-footer" style="background-color: #003366;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" id="btnEnviar" class="btn btn-primary">Enviar</button>
                     <input type="hidden" value="" id="datos_modal" name="datos_modal">

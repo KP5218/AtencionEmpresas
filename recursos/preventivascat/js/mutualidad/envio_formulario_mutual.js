@@ -1,5 +1,3 @@
-
-//funcion que envia los datos de la tabla a bd y responde con un pdf
 document.getElementById("idForm").addEventListener("submit", function(event) {
     event.preventDefault();
     var tabla = document.getElementById("tablaBody");
@@ -26,7 +24,7 @@ document.getElementById("idForm").addEventListener("submit", function(event) {
         datos.push(filaDatos);
     }
 
-    fetch('http://localhost/preventivascat/formulario_mutual.php', {
+    fetch('http://localhost/recursos/preventivascat/formulario_mutual.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ document.getElementById("idForm").addEventListener("submit", function(event) {
         body: JSON.stringify(datos),
     })
     .then(response => {
-        console.log("este es el response",response);
+        console.log("Este es el response:", response);
         if (!response.ok) {
             throw new Error('Hubo un problema con la solicitud: ' + response.statusText);
         }
@@ -52,21 +50,22 @@ document.getElementById("idForm").addEventListener("submit", function(event) {
         // Liberar el objeto URL
         window.URL.revokeObjectURL(url);
         mostrarMensajeExito("Datos insertados correctamente");
-            document.getElementById("rut_paciente").value = "";
-            document.getElementById("nombre_paciente").value = "";
-            document.getElementById("telefono_paciente").value = "";
-            document.getElementById("paquete").value = "";
-            document.getElementById("tipo").value = "";
-            document.getElementById("comentario").value = "";
-            document.getElementById("genero").value = "";
-            tabla.innerHTML = ""; 
-            resetSelect('paquete');
+        document.getElementById("rut_paciente").value = "";
+        document.getElementById("nombre_paciente").value = "";
+        document.getElementById("telefono_paciente").value = "";
+        document.getElementById("paquete").value = "";
+        document.getElementById("tipo").value = "";
+        document.getElementById("comentario").value = "";
+        document.getElementById("genero").value = "";
+        tabla.innerHTML = "";
+        resetSelect('paquete');
     })
     .catch((error) => {
         console.error('Error:', error);
         mostrarMensajeError(error);
     });
 });
+
 function mostrarMensajeExito(mensaje) {
     var alertContainer = document.getElementById("alert-container");
     var alertHTML = `

@@ -3,101 +3,108 @@
 {% load static %}
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<div class="container justify-content-center mt-3 ">
-    <form id="filtroForm" method="post" >
-         {% csrf_token %}
+<div class="container-fluid justify-content-center border-0">
+    <form id="filtroForm" method="post">
+        {% csrf_token %}
         <div class="row">
-            <div class="col-md-15">
-                <div class="card">
-                    <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
-                        <h4 class="card-title text-center mt-0" style="color:white;"> Lista de Horas Medicas </h4>
+            <div class="col-12">
+                <div class="card border-0">
+                    <div class="col-12">
+                        <h4 class="card-title text-center mt-3 text-muted" style="font-family: 'Arial', sans-serif; font-size: 28px; color: #4E4E4E; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1) color: #4E4E4E;">Lista de Horas Medicas</h4>
                     </div>
-                    <div id="messages-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+                    <div id="messages-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
                         {% for message in messages %}
-                        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show mb-3" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger alert-dismissible fade show mb-3 border-0" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show mb-3 border-0" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
-                    <div class="card-body card-hover" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+
+                    <div class="card-body card-hover border-0" style="padding: 20px; justify-content: center; align-items: center; margin-left:10%;">
                         <div class="form-group row">
                             <div class="row align-items-start">
-                                <div class="col-sm-4">
-                                    <label for="busqueda" class="mr-2 fw-bold" style="color:white;">filtro:</label>
-                                    <select class="form-control border border-2" id="busqueda" name="busqueda" onchange="mostrarEntradas()">
+                                <div class="col-md-4">
+                                    <label for="busqueda" class="mr-2 fw-bold" style="color:white;">Filtro:</label>
+                                    <select class="form-control" id="busqueda" name="busqueda" onchange="mostrarEntradas()">
                                         {% load custom_tags %}
                                         <option value="codigo1">Rut</option>
                                         {% if request.user|has_group:"Administradores" %}
-                                        <option value="codigo2">Preventivo</option>
-                                        <option value="codigo4">Urgencia</option>
-                                        <option value="codigo8">Consultas</option>
-                                        <option value="codigo7">Examen</option>
-                                        <option value="codigo5">Hospitalario</option>
-                                        <option value="codigo9">Utm</option>
+                                            <option value="codigo2">Preventivo</option>
+                                            <option value="codigo4">Urgencia</option>
+                                            <option value="codigo8">Consultas</option>
+                                            <option value="codigo7">Examen</option>
+                                            <option value="codigo5">Hospitalario</option>
+                                            <option value="codigo9">Utm</option>
                                         {% elif request.user|has_group:"Hospitalario" %}
-                                        <option value="codigo5">Hospitalario</option>
+                                            <option value="codigo5">Hospitalario</option>
                                         {% elif request.user|has_group:"Preventivo" %}
-                                        <option value="codigo2">Preventivo</option>
-                                        <option value="codigo8">Consultas</option>
-                                        <option value="codigo7">Examen</option>
+                                            <option value="codigo2">Preventivo</option>
                                         {% elif request.user|has_group:"Urgencia" %}
-                                        <option value="codigo4">Urgencia</option>
+                                            <option value="codigo4">Urgencia</option>
                                         {% elif request.user|has_group:"Consultas" %}
-                                        <option value="codigo8">Consultas</option>
+                                            <option value="codigo8">Consultas</option>
                                         {% elif request.user|has_group:"Examenes" %}
-                                        <option value="codigo7">Examen</option>
+                                            <option value="codigo7">Examen</option>
                                         {% elif request.user|has_group:"UTM" %}
-                                        <option value="codigo9">Utm</option>
-                                         {% endif %}
+                                            <option value="codigo9">Utm</option>
+                                        {% endif %}
                                         <option value="codigo3">Empresa</option>
                                         <option value="codigo6">Fecha</option>
                                     </select>
                                 </div>
 
-                                <div class="col-sm-4" style="display: none;" id="busquedaRutDiv">
+                                <div class="col-md-4" style="display: none;" id="busquedaRutDiv">
                                     <label for="busquedaRut" class="mr-2 fw-bold" style="color:white;"></label>
-                                    <input type="text" class="form-control" id="busquedaRut" name="busquedaRut" placeholder="Ejemplo: 11111111-1">
+                                    <input type="text" class="form-control" id="busquedaRut" name="busquedaRut" placeholder="11111111-1">
                                     <div id="mensaje1" style="color: red;"></div>
                                 </div>
-                                <div class="col-sm-4" style="display: none;">
+                                <div class="col-md-4" style="display: none;">
                                     <label for="busquedaPreventivo" class="mr-2 fw-bold" style="color:white;"></label>
                                     <input type="text" class="form-control" id="busquedaPreventivo" name="busquedaPreventivo" placeholder="Preventivo">
                                     <div id="mensaje2" style="color: red"></div>
                                 </div>
-                                <div class="col-sm-4" style="display: none;">
+                                <div class="col-md-4" style="display: none;">
                                     <label for="busquedaEmpresa" class="mr-2 fw-bold" style="color:white;"></label>
                                     <input type="text" class="form-control" id="busquedaEmpresa" name="busquedaEmpresa" placeholder="Nombre empresa">
                                     <div id="mensaje3" style="color: red"></div>
                                 </div>
-                                <div class="col-sm-3" style="display: none;" id="busquedafecha1">
-                                    <label for="fechaInicio" class="fw-bold"  style="color:white;">Inicio: </label>
+                                <div class="col-md-3" style="display: none;" id="busquedafecha1">
+                                    <label for="fechaInicio" class="fw-bold" style="color:white;">Inicio:</label>
                                     <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
                                 </div>
-                                <div class="col-sm-3" style="display: none;" id="busquedafecha2">
-                                    <label for="fechaFin" class="fw-bold"  style="color:white;">Fin: </label>
+                                <div class="col-md-3" style="display: none;" id="busquedafecha2">
+                                    <label for="fechaFin" class="fw-bold" style="color:white;">Fin:</label>
                                     <input type="date" class="form-control" id="fechaFin" name="fechaFin">
                                 </div>
-                                <div class="col-sm-4" style="display: none;">
+                                <div class="col-md-4" style="display: none;">
                                     <label for="busquedaExamen" class="mr-2 fw-bold" style="color:white;"></label>
                                     <input type="text" class="form-control" id="busquedaExamen" name="busquedaExamen" placeholder="Laboratorio-Imagenologia">
                                 </div>
-                                <div class="col-sm-4" style="display: none;">
+                                <div class="col-md-4" style="display: none;">
                                     <label for="busquedaUtms" class="mr-2 fw-bold" style="color:white;"></label>
                                     <input type="text" class="form-control" id="busquedaUtms" name="busquedaUtms" placeholder="Utms">
                                 </div>
-                                <div class="col-sm-2 mt-4" style="display: none;" id="botonurgencia">
-                                    <button class="btn btn-primary" type="button" id="filtrourgencia">Filtrar</button>
+                                <div class="col-md-2 mt-4" style="display: none;" id="botonurgencia">
+                                    <button class="btn btn-dark" type="button" id="filtrourgencia">Filtrar</button>
                                 </div>
-                                <div class="col-sm-2 mt-4" style="display: none;" id="botonhospitalario">
-                                    <button class="btn btn-primary" type="button" id="filtrohospitalario" >Filtrar</button>
+                                <div class="col-md-2 mt-4" style="display: none;" id="botonhospitalario">
+                                    <button class="btn btn-dark" type="button" id="filtrohospitalario">Filtrar</button>
                                 </div>
-                                <div class="col-sm-2 mt-4" style="display: none;" id="botonConsulta">
-                                    <button class="btn btn-primary" type="button" id="filtroConsulta">Filtrar</button>
+                                <div class="col-md-2 mt-4" style="display: none;" id="botonConsulta">
+                                    <button class="btn btn-dark" type="button" id="filtroConsulta">Filtrar</button>
                                 </div>
-                                 <div class="col-sm-2 mt-4" style="display: none;" id="botonbusqueda">
-                                    <button class="btn btn-primary" type="button" id="filtro" >Filtrar</button>
+                                <div class="col-md-2 mt-4" style="display: none;" id="botonbusqueda">
+                                    <button class="btn btn-dark" type="button" id="filtro">Filtrar</button>
                                 </div>
                                 <div id="mensaje4" style="color: red"></div>
                                 <div id="mensaje5" style="color: red"></div>
@@ -107,49 +114,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body"
-                         style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
-                        <div class="form-group row ">
-                            <div class="row align-items-start" style="background-color:white;margin-left:1px;">
+                    <div class="card-body" style="padding-top: 30px;">
+                        <div class="form-group row justify-content-center">
+                            <div class="row align-items-start" style="background-color:white;margin:0 auto;">
                                 <div style="max-height: 300px; overflow-y: auto;">
-                                    <div class="container">
-                                     <table id="miTabla"  class="table table-striped table-bordered" style="margin-top:0.5%;">
-                                            <thead class="text-center">
+                                    <table class="table table-striped table-bordered" style="margin-top:0.5%;">
+                                        <thead>
                                             <tr>
-                                                <th class="text-left">Rut</th>
-                                                <th class="text-right">Nombre</th>
-                                                <th class="text-right">Telefono</th>
+                                                <th>Rut</th>
+                                                <th>Nombre</th>
+                                                <th>Teléfono</th>
                                                 {% if request.user|has_group:"Preventivo" or request.user|has_group:"Administradores" %}
-                                                <th class="text-right">Paquete</th>
+                                                <th>Paquete</th>
                                                 {% endif %}
-                                                <th class="text-right">Empresa</th>
-                                                <th class="text-right">Mutualidad</th>
-                                                <th class="text-right">Solicitante</th>
+                                                <th>Empresa</th>
+                                                <th>Mutualidad</th>
+                                                <th>Solicitante</th>
                                             </tr>
-                                            </thead>
-                                            <tbody class="text-center" id="table-body">
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
+                                        </thead>
+                                        <tbody id="table-body"></tbody>
+                                    </table>
                                 </div>
                             </div>
-                           <div id="pagination" class="d-flex justify-content-end mt-2 pagination-container" style="display: none;"></div>
                         </div>
+                        <div id="pagination" class="d-flex justify-content-center mt-2 pagination-container" style="display: none;"></div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 <!-----Modal---->
 <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="modal" method="POST" action="{% url 'agendar' %}">
                 {% csrf_token %}
-                <div class="modal-header" style="background-color: rgb(78, 170, 167);">
+                <div class="modal-header" style="background-color: #003366;">
                     <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Detalles de hora agendada</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -202,7 +204,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" style="background-color: rgb(78, 170, 167);">
+                <div class="modal-footer" style="background-color:#003366;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="hidden" value="" id="datos_modal" name="datos_modal">
                 </div>
@@ -222,7 +224,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Input para ingresar el motivo -->
                     <label for="motivoAnulacion">Ingrese el motivo de la anulación:</label>
                     <input type="text" name="motivo_anulacion" class="form-control" id="motivoAnulacion" required>
                     <div id="error-mensaje" style="color: red;"></div>

@@ -135,7 +135,7 @@ $(document).ready(function() {
                 $('<td>').text(solicitud.mutualidad),
                 $('<td>').text(solicitud.responsable),
                 $('<td>').append(
-                        $('<button>').text('Ver').addClass('btn btn-primary').attr('type', 'button').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#exampleModal').attr('data-persona-id', solicitud.id).click(function() {
+                        $('<button>').text('Ver').addClass('btn btn-dark').attr('type', 'button').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#exampleModal').attr('data-persona-id', solicitud.id).click(function() {
                             var personaId = $(this).attr('data-persona-id');
                             $('#exampleModal').data('persona-id', personaId);
                             verDetalle(personaId);

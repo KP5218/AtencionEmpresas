@@ -3,17 +3,17 @@
 {% load static %}
 
 {% block content %}
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div class="container justify-content-center mt-3 ">
-    <div class="row">
-        <div class="col-md-15">
-            <div class="card" >
-                <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
-                    <h4 class="card-title text-center mt-0" style="color:white;"> Creación de prestacion</h4>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card border-0">
+                <div class="col-12 text-center mt-3">
+                    <h4 class="card-title text-muted" style="font-family: 'Arial', sans-serif; font-size: 28px; color: #4E4E4E; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">Creación de Prestación</h4>
                 </div>
-                  {% if messages %}
+
+                {% if messages %}
                     {% for message in messages %}
                         <div style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;" class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -21,26 +21,27 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+
                 <div id="alert-container" class="alert-container" style="position: fixed;top: 50px; right: 100px; width: 300px; z-index: 9999;"></div>
-                <form id="formulario" method="post" action="{% url 'nuevaPrestacion' %}" >
+
+                <form id="formulario" method="post" action="{% url 'nuevaPrestacion' %}">
                     {% csrf_token %}
-                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333; ">
-                        <div class="form-group row " style="margin-left:3%;">
-                            <div class="row align-items-start">
-                                <div class="col-sm-2">
-                                    <label for="codigofonasa" class="mr-2 fw-bold" style="color:white;">Codigo fonasa</label>
-                                    <input type="text" class="form-control" id="codigofonasa" name="codigofonasa" >
-                                </div>
-                                <div class="col-sm-2">
-                                    <label for="codigointerno" class="mr-2 fw-bold" style="color:white;">Codigo intermo</label>
-                                    <input type="text" class="form-control" id="codigointerno" name="codigointerno" >
-                                </div>
-                               <div class="col-sm-3">
-                                <label for="nombre_prestacion" class="mr-2 fw-bold" style="color:white;">Nombre prestación:</label>
+                    <div class="card-body mt-3" style="padding: 30px;">
+                        <div class="form-group row mb-4">
+                            <div class="col-sm-3">
+                                <label for="codigofonasa" class="fw-bold">Código Fonasa</label>
+                                <input type="text" class="form-control" id="codigofonasa" name="codigofonasa">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="codigointerno" class="fw-bold">Código Interno</label>
+                                <input type="text" class="form-control" id="codigointerno" name="codigointerno">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="nombre_prestacion" class="fw-bold">Nombre Prestación</label>
                                 <input class="form-control" type="text" name="nombre_prestacion" id="nombre_prestacion" required>
                             </div>
-                                <div class="col-sm-4">
-                                <label for="prestacion" class="mr-2 fw-bold" style="color:white;">Tipo de Prestación:</label>
+                            <div class="col-sm-3">
+                                <label for="prestacion" class="fw-bold">Tipo de Prestación</label>
                                 <select class="form-control" id="prestacion" name="tipo_prestacion" required>
                                     <option selected disabled>Seleccione tipo</option>
                                     {% for tipo in tipo_prestacion %}
@@ -48,15 +49,17 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <div class="col-sm-12">
                                 <div id="cod_fonasa" data-cod-fonasa="{{ cod_fonasa }}"></div>
-
                             </div>
-                            <div class="d-flex justify-content-end"  style="margin-top:1%;">
-                                <button type="submit" class="btn btn-primary" id="enviarNuevo" >Crear</button>
-                                <input type="hidden" id="datosJson" name="datosJson">
-                            </div>
+                        </div>
 
-
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-dark" id="enviarNuevo">Crear</button>
+                            <input type="hidden" id="datosJson" name="datosJson">
                         </div>
                     </div>
                 </form>
@@ -64,5 +67,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript" src="{% static 'js/crear_paquete/nueva_prestacion.js' %}"></script>
+
 {% endblock %}

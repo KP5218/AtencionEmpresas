@@ -5,14 +5,14 @@
 {% block content %}
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<div class="container justify-content-center mt-3 ">
+<div class="container-fluid justify-content-center border-0">
      <form id="filtroForm" method="post"   action="{% url 'Enviar' %}">
          {% csrf_token %}
         <div class="row">
             <div class="col-md-15">
-                <div class="card">
-                    <div class="col-sm-12" style="background-color: rgb(78, 170, 167); border: 1px solid #333">
-                        <h4 class="card-title text-center mt-0" style="color:white;"> UTMS </h4>
+                <div class="card border-0">
+                    <div class="col-sm-12" >
+                        <h4 class="card-title text-center mt-3 text-muted" style="font-family: 'Arial', sans-serif; font-size: 28px; color: #4E4E4E; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1) color: #4E4E4E;"> UTMS </h4>
                     </div>
                     <div id="messages-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
                         {% for message in messages %}
@@ -23,11 +23,11 @@
                         {% endfor %}
                     </div>
 
-                    <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                    <div class="card-body card-hover border-0" style="padding: 20px; justify-content: center; align-items: center; margin-left:10%;">
                         <div class="form-group row">
                             <div class="row align-items-start">
                                 <div class="col-sm-4">
-                                    <label for="busqueda" class="mr-2 fw-bold" style="color:white;">filtro:</label>
+                                    <label for="busqueda" class="mr-2 fw-bold">filtro:</label>
                                     <select class="form-control border border-2" id="busqueda" name="busqueda" onchange="mostrarEntradas()">
                                         {% load custom_tags %}
                                         <option value="codigo1">Codigo</option>
@@ -40,31 +40,31 @@
                                 </div>
 
                                 <div class="col-sm-4" style="display: none;" id="busquedaRutDiv">
-                                    <label for="busquedaCodigo" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <label for="busquedaCodigo" class="mr-2 fw-bold" ></label>
                                     <input type="text" class="form-control" id="busquedaCodigo" name="busquedaCodigo" placeholder="Ejemplo: 1111" pattern="[0-9]*" >
                                     <div id="mensaje1" style="color: red;"></div>
                                 </div>
                                 <div class="col-sm-4" style="display: none;">
-                                    <label for="busquedaRut" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <label for="busquedaRut" class="mr-2 fw-bold" ></label>
                                     <input type="text" class="form-control" id="busquedaRut" name="busquedaRut" placeholder="11111111-1">
                                     <div id="mensaje2" style="color: red"></div>
                                 </div>
                                 <div class="col-sm-4" style="display: none;">
-                                    <label for="busquedaNomUtm" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <label for="busquedaNomUtm" class="mr-2 fw-bold"></label>
                                     <input type="text" class="form-control" id="busquedaNomUtm" name="busquedaNomUtm" placeholder="Nombre utm">
                                     <div id="mensaje3" style="color: red"></div>
                                 </div>
                                 <div class="col-sm-4" style="display: none;">
-                                    <label for="busquedaNexamen" class="mr-2 fw-bold" style="color:white;"></label>
+                                    <label for="busquedaNexamen" class="mr-2 fw-bold"></label>
                                     <input type="text" class="form-control" id="busquedaNexamen" name="busquedaNexamen" placeholder="Número examen" pattern="[0-9]*">
                                     <div id="mensaje4" style="color: red"></div>
                                 </div>
                                 <div class="col-sm-3" style="display: none;" id="busquedafecha1">
-                                    <label for="fechaInicio" class="fw-bold"  style="color:white;">Inicio: </label>
+                                    <label for="fechaInicio" class="fw-bold"  >Inicio: </label>
                                     <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
                                 </div>
                                 <div class="col-sm-3" style="display: none;" id="busquedafecha2">
-                                    <label for="fechaFin" class="fw-bold"  style="color:white;">Fin: </label>
+                                    <label for="fechaFin" class="fw-bold"  >Fin: </label>
                                     <input type="date" class="form-control" id="fechaFin" name="fechaFin">
                                 </div>
                                  <div class="col-sm-2 mt-4" style="display: none;" id="botonbusqueda">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                        <div class="card-body" style="background-color: rgb(78, 170, 167);margin-top:1%; border: 1px solid #333;">
+                        <div class="card-body" style="margin-top:1%; border: 1px solid #333;">
                             <div class="form-group row ">
                                 <div class="row align-items-start" style="background-color:white;margin-left:1px;">
                                     <div style="max-height: 300px; overflow-y: auto;">

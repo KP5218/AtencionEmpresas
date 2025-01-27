@@ -17,7 +17,7 @@ if ($examen !== null) {
 
     if (pg_num_rows($result) > 0) {
         $row = pg_fetch_assoc($result);
-        $valido = ($row['valido'] == 't'); 
+        $valido = ($row['valido'] == 't');
 
         $n_examen = $row['n_examen'];
         $cod_examen = $row['cod_examen'];

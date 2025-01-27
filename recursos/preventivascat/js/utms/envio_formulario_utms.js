@@ -20,7 +20,7 @@ document.getElementById("idForm").addEventListener("submit", function(event) {
         datos.push(filaDatos);
     }
 
-    fetch('http://localhost/preventivascat/formulario_utms.php', {
+    fetch('http://localhost/recursos/preventivascat/formulario_utms.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
