@@ -628,7 +628,7 @@ def agendar(request):
         fecha_form = datetime.strptime(fecha, "%Y-%m-%d")
         fecha_formateada = fecha_form.strftime("%d-%m-%y")
 
-        mensaje = f"Su cita ha sido agendada para el {fecha_formateada} a las {hora} en Clinica Alemana Temuco."
+        mensaje = f"Su cita ha sido agendada para el {fecha_formateada} a las {hora} ."
 
         responsable_username = request.user.username
 
