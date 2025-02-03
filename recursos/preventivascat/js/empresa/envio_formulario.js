@@ -21,7 +21,7 @@ document.getElementById("idForm").addEventListener("submit", function(event) {
         datos.push(filaDatos);
     }
 
-    fetch('http://localhost/preventivascat/formulario.php', {
+    fetch('http://localhost/recursos/preventivascat/formulario.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -84,3 +84,4 @@ function mostrarMensajeError(mensaje) {
     `;
     alertContainer.innerHTML = alertHTML;
 }
+

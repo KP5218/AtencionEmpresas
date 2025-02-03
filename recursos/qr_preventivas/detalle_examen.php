@@ -7,7 +7,7 @@ $redirectUrl = '';
 
 //si el codigo no es vacio creo la redireccion en una variable
 if ($solicitud !== null) {
-    $redirectUrl = "http://192.168.0.9/recursos/qr_preventivas/detalle_examen.php?id=" . urlencode($solicitud);
+    $redirectUrl = "http:// 192.168.0.9/qr_preventivas/detalle_examen.php?id=" . urlencode($solicitud);
 }
 
 //si la solicitud es POST es porque se esta enviando info desde la pagina

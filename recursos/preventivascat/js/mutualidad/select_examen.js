@@ -1,5 +1,5 @@
 //funcion para obtener los tipo de examen para llenar el select
-fetch('http://localhost/preventivascat/select_examen.php')
+fetch('http://localhost/recursos/preventivascat/select_examen.php')
   .then(response => response.json())
   .then(dataex => {
     console.log(dataex);

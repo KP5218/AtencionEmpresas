@@ -1,6 +1,6 @@
 //funcion para obtener los tipo de solicitud para llenar el select
 
-fetch('http://localhost/preventivascat/opciones_select_tipo.php')
+fetch('http://localhost/recursos/preventivascat/opciones_select_tipo.php')
   .then(response => response.json())
   .then(datas => {
     llenarSelectDerivacion('tipo', datas); 

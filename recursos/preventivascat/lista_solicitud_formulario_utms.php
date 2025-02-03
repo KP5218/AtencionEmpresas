@@ -43,7 +43,7 @@ try {
             $solicitud['estado'] = "Aún no encuentra recepcionado";
         }
         elseif ($solicitud['recepcionado'] === true) {
-            $solicitud['estado'] = "Recepcionado;
+            $solicitud['estado'] = "Recepcionado en Clinica Alemana";
         }
         
         unset($solicitud['recepcionado']);

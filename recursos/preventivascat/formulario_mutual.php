@@ -142,10 +142,6 @@ if ($response["authenticated"]) {
             $num_solicitud_str = strval($num_solicitud);
             $template_html = str_replace('{num_solicitud}', $num_solicitud_str, $template_html);
 
-            //creo la imagen
-            $ruta_logo = 'img/Home.png';
-            $logo_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($ruta_logo));
-            $template_html = str_replace('{logo}', '<img src="' . $logo_base64 . '" class="logo" alt="Logo">', $template_html);
 
             $tabla_data = '';
             //creo los registros de la tabla del pdf
@@ -202,3 +198,4 @@ if ($response["authenticated"]) {
     echo json_encode(array("exito" => false, "mensaje" => "Acceso no permitido"));
 }
 ?>
+

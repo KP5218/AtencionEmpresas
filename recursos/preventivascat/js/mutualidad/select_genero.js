@@ -1,5 +1,5 @@
 //funcion para obtener los tipo de genero para llenar el select
-fetch('http://localhost/preventivascat/select_genero.php')
+fetch('http://localhost/recursos/preventivascat/select_genero.php')
   .then(response => response.json())
   .then(data => {
     console.log(data);

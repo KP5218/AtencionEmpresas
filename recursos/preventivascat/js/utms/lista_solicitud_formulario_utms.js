@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //funcion para traer todos los datos
 function cargarDatos(startIndex = 0, endIndex =10,currentPage) {
-    fetch('http://localhost/preventivascat/lista_solicitud_formulario_utms.php')
+    fetch('http://localhost/recursos/preventivascat/lista_solicitud_formulario_utms.php')
     .then(response => response.json())
     .then(data => {
 
@@ -75,7 +75,7 @@ function cargarDatos(startIndex = 0, endIndex =10,currentPage) {
 
 //si estoy haciendo un filtro por fechas
 function buscarRegistrosPorFechas(fechaInicio, fechaFin, startIndex = 0, endIndex = 10,currentPage) {
-    const url = `http://localhost/preventivascat/lista_solicitud_formulario_utms.php?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+    const url = `http://localhost/recursos/preventivascat/lista_solicitud_formulario_utms.php?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
 
     fetch(url)
     .then(response => response.json())
