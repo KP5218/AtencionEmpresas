@@ -11,4 +11,5 @@ urlpatterns = [
     path('agendar/',views.agendar, name="agendar"),
     path('filtroConsultas/',views.filtroConsultas, name="filtroConsultas"),
     path('filtroExamen/',views.filtroExamen, name="filtroExamen"),
+    path('filtroUtm/',views.filtroUtm, name="filtroUtm"),
 ]

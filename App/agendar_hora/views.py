@@ -5,6 +5,9 @@ from datetime import datetime
 from django.http import HttpRequest
 from django.shortcuts import render, reverse
 from App.agendar_hora.models import solicitudes
+from App.crear_cliente.models import usuario
+from App.crear_empresa.models import utms
+from App.recepcion_examen.models import examenes
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -13,6 +16,7 @@ from django.db.models import Max
 from django.db.models import Q
 import urllib
 from urllib.error import HTTPError, URLError
+from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def agenda_hora(request):
@@ -40,9 +44,9 @@ def filtroRut(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -123,9 +127,9 @@ def filtroPreventiva(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -202,9 +206,9 @@ def filtroEmpresa(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -279,9 +283,9 @@ def filtroFecha(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -336,7 +340,7 @@ def filtroFecha(request):
 @csrf_exempt
 def filtroUrgencia(request):
     if request.method == 'POST':
-        cod_tipo_solicitud = '02'
+        cod_tipo_solicitud = '2'
 
         datos_filtrados_urgencias = solicitudes.objects.filter(tipo_solicitud__cod_tipo_solicitud=cod_tipo_solicitud)
 
@@ -347,9 +351,9 @@ def filtroUrgencia(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -415,9 +419,9 @@ def filtroHospitalario(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -483,9 +487,9 @@ def filtroConsultas(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -551,9 +555,9 @@ def filtroExamen(request):
         filters = Q()
         for grupo in grupos_usuario:
             if grupo.name == 'Urgencia':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='02')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='2')
             elif grupo.name == 'Preventivo':
-                filters |= Q(tipo_solicitud__cod_tipo_solicitud='01')
+                filters |= Q(tipo_solicitud__cod_tipo_solicitud='1')
             elif grupo.name == 'Hospitalario':
                 filters |= Q(tipo_solicitud__cod_tipo_solicitud='03')
             elif grupo.name == 'Consultas':
@@ -608,6 +612,51 @@ def filtroExamen(request):
             'year': datetime.now().year,
         }
         return render(request, 'agenda_hora/agenda_hora.html', context)
+
+@csrf_exempt
+def filtroUtm(request):
+    if request.method == 'POST':
+        utm_nombre = request.POST.get('busquedaUtm')
+        print(f"Buscando por UTM (nombre): {utm_nombre}")
+
+        if utm_nombre:
+            try:
+                utm_obj = utms.objects.get(nombre_utms=utm_nombre)
+
+                utm_codigo = utm_obj.cod_utms
+
+                usuarios_utm = usuario.objects.filter(utm=utm_obj)
+
+                examenes_utm = examenes.objects.filter(usuario__in=usuarios_utm)
+                if examenes_utm.exists():
+                    datos_json = []
+                    for examen in examenes_utm:
+                        datos_json.append({
+                            "id": examen.cod_examen,
+                            "nombre_paciente": examen.nombre_paciente or "—",
+                            "telefono": examen.telefono or "—",
+                            "rut": examen.rut or "—",
+                            "responsable": examen.responsable or "—",
+                            "fecha_ingreso": examen.fecha_ingreso or "—",
+                            "comentario": examen.comentario or "—",
+                        })
+                    return JsonResponse({'data': datos_json})
+                else:
+                    return JsonResponse({'data': []})
+
+            except ObjectDoesNotExist as e:
+                print(f"Error: {str(e)}")
+                return JsonResponse({'error': f'No se encontró la UTM especificada: {utm_nombre}'})
+            except Exception as e:
+                print(f"Error inesperado: {str(e)}")
+                return JsonResponse({'error': 'Hubo un error inesperado.'})
+
+        else:
+            return JsonResponse({'error': 'No se especificó ninguna UTM.'})
+
+    return JsonResponse({'error': 'Método no permitido.'})
+
+
 
 @csrf_exempt
 def agendar(request):

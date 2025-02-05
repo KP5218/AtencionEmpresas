@@ -753,6 +753,179 @@ $(document).ready(function() {
     }
 });
 
+///////////////////////////////---------------Filtro utm------------/////////////////////////////////
+document.getElementById('filtro').addEventListener('click', function() {
+    var utm = document.getElementById('busquedaUtms').value.trim();  // Obtener el valor de UTM
+
+    document.getElementById('busquedaUtms').value = '';
+
+    if(utm) {
+        $.ajax({
+            type: 'POST',
+            url: 'filtroUtm/',
+            data: {
+                'busquedaUtm': utm,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            success: function(response) {
+                if (response && response.data && response.data.length > 0) {
+                    mostrarPagina(response.data, 1, 4);
+                    mostrarMensaje("");
+                } else {
+                    mostrarMensaje("No se encontró examen.");
+                }
+            },
+            error: function(error) {
+                console.error('Error al filtrar:', error);
+            }
+        });
+    } else {
+        mostrarMensaje("Por favor ingrese un valor para UTM.");
+    }
+});
+
+document.getElementById('filtro').addEventListener('click', function() {
+    var utm = document.getElementById('busquedaUtms').value.trim();
+
+    document.getElementById('busquedaUtms').value = '';
+
+    if(utm) {
+        $.ajax({
+            type: 'POST',
+            url: 'filtroUtm/',
+            data: {
+                'busquedaUtm': utm,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            success: function(response) {
+                if (response && response.data && response.data.length > 0) {
+                    mostrarPagina(response.data, 1, 4);
+                    mostrarMensaje("");
+                } else {
+                    mostrarMensaje("No se encontró examen.");
+                }
+            },
+            error: function(error) {
+                console.error('Error al filtrar:', error);
+            }
+        });
+    } else {
+        mostrarMensaje("Por favor ingrese un valor para UTM.");
+    }
+});
+
+function mostrarMensaje(mensaje) {
+    var mensajeElement = document.getElementById('mensaje8');
+    if (mensaje === "No se encontró examen.") {
+        mensajeElement.textContent = mensaje;
+        mensajeElement.classList.add('error');
+        mensajeElement.style.display = 'block';
+    } else {
+        mensajeElement.textContent = mensaje;
+        mensajeElement.classList.remove('error');
+        mensajeElement.style.display = 'none';
+    }
+}
+
+function mostrarPagina(data, numeroPagina, filasPorPagina) {
+    var tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+
+    var inicio = (numeroPagina - 1) * filasPorPagina;
+    var fin = inicio + filasPorPagina;
+
+    data.slice(inicio, fin).forEach(function(solicitud) {
+        var fila = document.createElement('tr');
+
+        var tdRut = document.createElement('td');
+        tdRut.textContent = solicitud.rut || "—";
+        fila.appendChild(tdRut);
+
+        var tdNombrePaciente = document.createElement('td');
+        tdNombrePaciente.textContent = solicitud.nombre_paciente || "—";
+        fila.appendChild(tdNombrePaciente);
+
+        var tdTelefono = document.createElement('td');
+        tdTelefono.textContent = solicitud.telefono || "—";
+        fila.appendChild(tdTelefono);
+
+        var tdPaquete = document.createElement('td');
+        tdPaquete.textContent = solicitud.paquete || "—";
+        fila.appendChild(tdPaquete);
+
+        var tdEmpresa = document.createElement('td');
+        tdEmpresa.textContent = solicitud.empresa || "—";
+        fila.appendChild(tdEmpresa);
+
+        var tdMutualidad = document.createElement('td');
+        tdMutualidad.textContent = solicitud.mutualidad || "—";
+        fila.appendChild(tdMutualidad);
+
+        var tdSolicitante = document.createElement('td');
+        tdSolicitante.textContent = solicitud.solicitante || "—";
+        fila.appendChild(tdSolicitante);
+
+        var tdAgendar = document.createElement('td');
+        var btnAgendar = document.createElement('button');
+        btnAgendar.classList.add('btn', 'btn-primary');
+        btnAgendar.textContent = 'Agendar';
+        btnAgendar.setAttribute('type', 'button');
+        btnAgendar.setAttribute('data-bs-toggle', 'modal');
+        btnAgendar.setAttribute('data-bs-target', '#exampleModal');
+        btnAgendar.setAttribute('data-persona-id', solicitud.id);
+        btnAgendar.style.backgroundColor = '#003366';
+
+        btnAgendar.addEventListener('click', function() {
+            var personaId = btnAgendar.getAttribute('data-persona-id');
+            $('#exampleModal').data('persona-id', personaId);
+        });
+
+        tdAgendar.appendChild(btnAgendar);
+        fila.appendChild(tdAgendar);
+
+        tableBody.appendChild(fila);
+    });
+
+    // Paginación
+    if (data.length > filasPorPagina) {
+        var totalPaginas = Math.ceil(data.length / filasPorPagina);
+        var pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        for (var i = 1; i <= totalPaginas; i++) {
+            var btnPagina = document.createElement('button');
+            btnPagina.classList.add('btn', 'pagination-btn');
+            btnPagina.setAttribute('type', 'button');
+            btnPagina.textContent = i;
+
+            if (i === numeroPagina) {
+                btnPagina.classList.add('active');
+            }
+
+            btnPagina.addEventListener('click', function(pagina) {
+                return function() {
+                    mostrarPagina(data, pagina, filasPorPagina);
+                };
+            }(i));
+
+            btnPagina.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+            });
+
+            btnPagina.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+
+            pagination.appendChild(btnPagina);
+        }
+    }
+    else {
+        document.getElementById('pagination').innerHTML = '';
+    }
+}
+
+
+
 ///////////////////////////////---------------Validaciones Botón enviar y modal------------/////////////////////////////////
 $(document).ready(function() {
     $('#btnEnviar').click(function(event) {
@@ -768,7 +941,7 @@ $(document).ready(function() {
                 title: 'Error',
                 text: 'Esta fuera del rango horario.'
             });
-            event.preventDefault(); // Evitar que el formulario se envíe
+            event.preventDefault();
             return false;
         }
 

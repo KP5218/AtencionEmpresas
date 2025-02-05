@@ -106,12 +106,12 @@ document.querySelector('#enviarDatos').addEventListener('click', function(event)
                      var modalRows = modalTableBody.querySelectorAll('tbody tr');
 
                      modalRows.forEach(function(row, index) {
-                         if(index > 0) { // Ignorar la primera fila
+                         if(index > 0) {
                              var rowData = {};
                              var cells = Array.from(row.cells);
 
                              cells.forEach(function(cell, cellIndex) {
-                                 if(cellIndex < cells.length - 1) { // Ignorar la última celda
+                                 if(cellIndex < cells.length - 1) {
                                      rowData['campo_' + cellIndex] = cell.textContent.trim();
                                  }
                              });
@@ -126,8 +126,9 @@ document.querySelector('#enviarDatos').addEventListener('click', function(event)
                          nombrePaquete: nombrePaquete,
                          datosTabla: datosTabla
                      };
+                     console.log('datos', datos)
 
-                     fetch('/crear_paquete/crear_paquete/', {
+                     fetch('/crear_paquete/guardar_paquete/', {
                          method: 'POST',
                          headers: {
                              'Content-Type': 'application/json',
@@ -159,7 +160,7 @@ document.querySelector('#enviarDatos').addEventListener('click', function(event)
      }
 
      function mostrarAlerta(mensaje, tipo) {
-     console.log(tipo)
+     console.log(tipo,mensaje)
          var alertHTML = `
              <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
                  ${mensaje}
