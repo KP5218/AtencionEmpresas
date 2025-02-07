@@ -1,1 +1,1 @@
-# Backup--SAEM
+Este sistema permite a empresas externas conectarse mediante una API en PHP para realizar pedidos, mientras que un backend en Django gestiona clientes, empresas y reservas de horas. Los usuarios pueden registrar clientes, programar citas, revisar disponibilidad y administrar reservas. Empresas externas consultan y modifican reservas a través de la API, optimizando la gestión de citas.
