@@ -657,7 +657,6 @@ def filtroUtm(request):
     return JsonResponse({'error': 'Método no permitido.'})
 
 
-
 @csrf_exempt
 def agendar(request):
     if request.method == 'POST':
